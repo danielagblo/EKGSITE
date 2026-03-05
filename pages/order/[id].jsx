@@ -500,14 +500,19 @@ export default function OrderPage() {
                   color: 'var(--muted)',
                   fontSize: 14
                 }}>
-                  <div>✓ Autopilot</div>
-                  <div>✓ Premium Audio</div>
-                  <div>✓ Climate Control</div>
-                  <div>✓ Navigation System</div>
-                  <div>✓ Leather Interior</div>
-                  <div>✓ Panoramic Roof</div>
-                  <div>✓ 360° Camera</div>
-                  <div>✓ Smart Entry</div>
+                  {model.features && Array.isArray(model.features) && model.features.length > 0 ? (
+                    model.features.map((feature, i) => (
+                      <div key={i}>✓ {feature}</div>
+                    ))
+                  ) : (
+                    <>
+                      <div>✓ Autopilot</div>
+                      <div>✓ Premium Audio</div>
+                      <div>✓ Climate Control</div>
+                      <div>✓ Navigation System</div>
+                      <div>✓ Leather Interior</div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
