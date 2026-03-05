@@ -9,7 +9,7 @@ export default function Navbar(){
 
   return (
     <motion.header className="nav" initial={{ y: -40, opacity: 0 }} animate={{ y:0, opacity:1 }} transition={{ duration: .45 }}>
-      <Link href="/" legacyBehavior><a style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
         <div style={{display:'flex',alignItems:'center',gap:14}}>
           <img
             src="/logo-transparent.png"
@@ -29,29 +29,28 @@ export default function Navbar(){
             <div style={{color:'var(--muted)',fontSize:12,lineHeight:1}}>Luxury Electric Vehicles</div>
           </div>
         </div>
-      </a></Link>
-
+      </Link>
       <nav style={{display:'flex',alignItems:'center'}}>
         <div className="links" aria-hidden={open}>
-          <Link href="/" legacyBehavior><a className={router.pathname === '/' ? 'active' : ''}>Home</a></Link>
-          <Link href="/about" legacyBehavior><a className={router.pathname === '/about' ? 'active' : ''}>About</a></Link>
-          <Link href="/models" legacyBehavior><a className={router.pathname === '/models' ? 'active' : ''}>Fleet</a></Link>
-          <Link href="/mission" legacyBehavior><a className={router.pathname === '/mission' ? 'active' : ''}>Mission</a></Link>
+          <Link href="/" className={router.pathname === '/' ? 'active' : ''}>Home</Link>
+          <Link href="/about" className={router.pathname === '/about' ? 'active' : ''}>About</Link>
+          <Link href="/models" className={router.pathname === '/models' ? 'active' : ''}>Fleet</Link>
+          <Link href="/mission" className={router.pathname === '/mission' ? 'active' : ''}>Mission</Link>
           
-          <Link href="/contact" legacyBehavior><a className="cta">Contact</a></Link>
+          <Link href="/contact" className="cta">Contact</Link>
         </div>
 
         <button className="nav-toggle" aria-expanded={open} onClick={()=>setOpen(v=>!v)} aria-label="Toggle menu">☰</button>
         {open && (
           <motion.div className="mobile-menu" initial={{ opacity:0, y:-8 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0 }}>
-            <Link href="/" legacyBehavior><a onClick={()=>setOpen(false)}>Home</a></Link>
-            <Link href="/models" legacyBehavior><a onClick={()=>setOpen(false)}>Models</a></Link>
-            <Link href="/about" legacyBehavior><a onClick={()=>setOpen(false)}>About</a></Link>
+            <Link href="/" onClick={()=>setOpen(false)}>Home</Link>
+            <Link href="/models" onClick={()=>setOpen(false)}>Models</Link>
+            <Link href="/about" onClick={()=>setOpen(false)}>About</Link>
             
-            <Link href="/contact" legacyBehavior><a onClick={()=>setOpen(false)} className="cta">Contact</a></Link>
+            <Link href="/contact" onClick={()=>setOpen(false)} className="cta">Contact</Link>
           </motion.div>
         )}
       </nav>
     </motion.header>
-  )
+  );
 }

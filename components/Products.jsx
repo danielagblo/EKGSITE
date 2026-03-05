@@ -47,11 +47,11 @@ export default function Products({ limit }) {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 24 }}>
         {displayedItems.map(i => <ProductCard key={i.id} item={i} />)}
       </div>
-
       {limit && items.length > limit && (
         <div style={{ textAlign: 'center', marginTop: 48 }}>
-          <Link href="/models" legacyBehavior>
-            <a style={{
+          <Link
+            href="/models"
+            style={{
               display: 'inline-flex',
               padding: '16px 40px',
               background: 'rgba(212, 175, 55, 0.1)',
@@ -65,14 +65,14 @@ export default function Products({ limit }) {
               transition: 'all 0.3s ease',
               textDecoration: 'none'
             }}
-              onMouseOver={(e) => { e.currentTarget.style.background = 'rgba(212, 175, 55, 0.2)'; e.currentTarget.style.borderColor = '#D4AF37' }}
-              onMouseOut={(e) => { e.currentTarget.style.background = 'rgba(212, 175, 55, 0.1)'; e.currentTarget.style.borderColor = 'rgba(212, 175, 55, 0.3)' }}
-            >
+            onMouseOver={(e) => { e.currentTarget.style.background = 'rgba(212, 175, 55, 0.2)'; e.currentTarget.style.borderColor = '#D4AF37' }}
+            onMouseOut={(e) => { e.currentTarget.style.background = 'rgba(212, 175, 55, 0.1)'; e.currentTarget.style.borderColor = 'rgba(212, 175, 55, 0.3)' }}>
+            
               View Full Fleet
-            </a>
+            
           </Link>
         </div>
       )}
     </section>
-  )
+  );
 }

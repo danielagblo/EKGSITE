@@ -63,13 +63,13 @@ export default function AdminLayout({ title, children }) {
             {nav.map(item => {
               const isActive = path === item.href
               return (
-                <Link key={item.href} href={item.href} legacyBehavior>
-                  <a className={isActive ? 'active' : ''}>
-                    <div style={{ color: isActive ? '#fff' : 'inherit' }}>{item.icon}</div>
-                    <span style={{ fontWeight: isActive ? 700 : 500 }}>{item.label}</span>
-                  </a>
+                <Link key={item.href} href={item.href} className={isActive ? 'active' : ''}>
+
+                  <div style={{ color: isActive ? '#fff' : 'inherit' }}>{item.icon}</div>
+                  <span style={{ fontWeight: isActive ? 700 : 500 }}>{item.label}</span>
+
                 </Link>
-              )
+              );
             })}
           </nav>
         </div>
@@ -90,7 +90,6 @@ export default function AdminLayout({ title, children }) {
           </div>
         </div>
       </aside>
-
       <div className="admin-main">
         <header className="admin-header">
           <div className="breadcrumb">
@@ -131,5 +130,5 @@ export default function AdminLayout({ title, children }) {
         </main>
       </div>
     </div>
-  )
+  );
 }
