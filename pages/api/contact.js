@@ -1,7 +1,6 @@
 const storage = require('../../lib/api-storage')
 const nodemailer = require('nodemailer')
-const { Resend } = require('resend')
-
+const { sendViaGmailApi } = require('../../lib/api-utils/gmail')
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
         res.setHeader('Allow', 'POST')
@@ -23,17 +22,16 @@ export default async function handler(req, res) {
             return res.status(500).json({ error: 'System configuration error: No recipient email.' })
         }
 
-        // Try Resend SDK First
-        const resendKey = process.env.RESEND_API_KEY
-        if (resendKey) {
+        // Try Gmail API First
+        const gmailClientSecret = process.env.GMAIL_CLIENT_SECRET
+        if (gmailClientSecret) {
             try {
-                const resend = new Resend(resendKey)
-                const fromEmail = settings?.fromEmail || process.env.FROM_EMAIL || 'onboarding@resend.dev'
+                const fromEmail = settings?.fromEmail || process.env.FROM_EMAIL || 'me'
 
-                const { error } = await resend.emails.send({
+                await sendViaGmailApi({
                     from: fromEmail,
                     to: adminEmail,
-                    reply_to: email,
+                    replyTo: email,
                     subject: `Contact Form Inquiry: ${subject || 'New Message'} - from ${name}`,
                     html: `
                         <div style="font-family: sans-serif; line-height: 1.6; color: #333; max-width: 600px;">
@@ -49,12 +47,9 @@ export default async function handler(req, res) {
                     `
                 })
 
-                if (!error) {
-                    return res.status(200).json({ ok: true, message: 'Message sent via Resend' })
-                }
-                console.error('Resend Contact Error:', error)
-            } catch (resendErr) {
-                console.error('Resend Contact Catch:', resendErr)
+                return res.status(200).json({ ok: true, message: 'Message sent via Gmail API' })
+            } catch (gmailErr) {
+                console.error('Gmail API Contact Catch:', gmailErr)
             }
         }
 

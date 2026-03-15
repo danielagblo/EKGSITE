@@ -1,8 +1,7 @@
 const storage = require("../../../../lib/api-storage");
 const { buildInvoiceBuffer } = require("../../../../lib/api-utils/helpers");
 const nodemailer = require("nodemailer");
-const { Resend } = require("resend");
-
+const { sendViaGmailApi } = require("../../../../lib/api-utils/gmail");
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
@@ -18,14 +17,13 @@ module.exports = async function handler(req, res) {
     const pdfBuffer = await buildInvoiceBuffer(order);
     const settings = await storage.getSettings();
 
-    // Try Resend SDK first
-    const resendKey = process.env.RESEND_API_KEY;
-    if (resendKey) {
+    // Try Gmail API first
+    const gmailClientSecret = process.env.GMAIL_CLIENT_SECRET;
+    if (gmailClientSecret) {
       try {
-        const resend = new Resend(resendKey);
-        const fromEmail = settings?.fromEmail || process.env.FROM_EMAIL || 'onboarding@resend.dev';
+        const fromEmail = settings?.fromEmail || process.env.FROM_EMAIL || 'me';
 
-        const { data, error } = await resend.emails.send({
+        const data = await sendViaGmailApi({
           from: fromEmail,
           to: order.email,
           subject: `EKG Logistics and transport — Invoice ${order.id}`,
@@ -38,10 +36,9 @@ module.exports = async function handler(req, res) {
           ],
         });
 
-        if (!error) return res.json({ ok: true, via: 'resend', data });
-        console.error('Invoice Resend Error:', error);
+        return res.json({ ok: true, via: 'gmail', data });
       } catch (err) {
-        console.error('Invoice Resend Catch:', err);
+        console.error('Invoice Gmail API Catch:', err);
       }
     }
 
