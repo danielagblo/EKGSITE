@@ -14,7 +14,8 @@ import {
   MapPin,
   MessageSquare,
   Clock,
-  Eye
+  Eye,
+  Trash2
 } from 'lucide-react'
 import AdminLayout from '../../components/AdminLayout'
 import Modal from '../../components/Modal'
@@ -99,6 +100,25 @@ export default function AdminOrders() {
       const updated = await res.json()
       setOrders(prev => prev.map(o => o.id === id ? updated : o))
       setViewItem(updated)
+    } catch (e) {
+      alert(e.message)
+    } finally {
+      setUpdating(false)
+    }
+  }
+  
+  const deleteOrder = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this order? This action cannot be undone.')) return
+    setUpdating(true)
+    try {
+      const token = localStorage.getItem('admin_token')
+      const res = await fetch(`/api/orders/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      if (!res.ok) throw new Error('Failed to delete order')
+      setOrders(prev => prev.filter(o => o.id !== id))
+      if (viewItem?.id === id) setViewItem(null)
     } catch (e) {
       alert(e.message)
     } finally {
@@ -235,6 +255,14 @@ export default function AdminOrders() {
                   <FileText size={16} />
                   <span>Invoice</span>
                 </a>
+                <button
+                  className="btn btn-outline"
+                  onClick={() => deleteOrder(o.id)}
+                  style={{ width: 44, height: 44, padding: 0, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', borderColor: 'rgba(239, 68, 68, 0.2)', color: '#ef4444' }}
+                  title="Delete Order"
+                >
+                  <Trash2 size={18} />
+                </button>
               </div>
             </article>
           ))}
@@ -282,6 +310,14 @@ export default function AdminOrders() {
                   <TrendingUp size={16} /> Order Approved & Notified
                 </div>
               )}
+              <button
+                className="btn btn-outline"
+                onClick={() => deleteOrder(viewItem.id)}
+                disabled={updating}
+                style={{ borderColor: 'rgba(239, 68, 68, 0.2)', color: '#ef4444' }}
+              >
+                <Trash2 size={16} /> {updating ? '...' : 'Delete'}
+              </button>
               <button className="btn btn-outline" onClick={() => setViewItem(null)} style={{ marginLeft: 'auto' }}>Close</button>
             </div>
           </div>
