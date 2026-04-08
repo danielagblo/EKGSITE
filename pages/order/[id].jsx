@@ -14,7 +14,7 @@ export default function OrderPage() {
   }
   const [models, setModels] = React.useState([])
   const [modelsLoading, setModelsLoading] = React.useState(true)
-  const model = models.find(m => m.id === id)
+  const model = models.find(m => String(m.id) === String(id))
 
   const [form, setForm] = React.useState({ name: '', email: '', phone: '', start: '', end: '', location: '', note: '' })
   const [loading, setLoading] = React.useState(false)
@@ -137,6 +137,7 @@ export default function OrderPage() {
             <strong style={{ color: 'var(--accent-2)' }}>Payment Notice:</strong> Payment will be collected upon vehicle delivery — no online payment required.
           </div>
           <div style={{ display: 'flex', gap: 12, marginTop: 32, justifyContent: 'center' }}>
+          <div style={{ display: 'flex', gap: 12, marginTop: 32, justifyContent: 'center', flexDirection: isMobile ? 'column' : 'row' }}>
             <button className="small" onClick={() => navigate('/my-orders')}>View All Orders</button>
             <button className="primary" onClick={() => navigate('/models')}>Browse More Models</button>
           </div>
@@ -155,8 +156,8 @@ export default function OrderPage() {
       <div style={{
         position: 'relative',
         height: isMobile ? 'auto' : '70vh',
-        minHeight: isMobile ? '100vh' : 500,
-        padding: isMobile ? '100px 0 80px' : 0,
+        minHeight: isMobile ? 540 : 500,
+        padding: isMobile ? '96px 0 56px' : 0,
         background: `linear-gradient(rgba(0,0,0,0.65), rgba(16,24,40,0.92)), url(${getCldImageUrl(model.image, { width: 1920, height: 1080 })})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -171,16 +172,16 @@ export default function OrderPage() {
           onClick={() => navigate(-1)}
           style={{
             position: 'absolute',
-            top: isMobile ? 20 : 40,
-            left: isMobile ? 20 : 60,
-            padding: isMobile ? '8px 16px' : '10px 20px',
+            top: isMobile ? 14 : 40,
+            left: isMobile ? 14 : 60,
+            padding: isMobile ? '7px 14px' : '10px 20px',
             background: 'rgba(0,0,0,0.8)',
             backdropFilter: 'blur(20px)',
             border: '1px solid rgba(255,255,255,0.3)',
             zIndex: 10,
             color: '#ffffff',
             fontWeight: 600,
-            fontSize: isMobile ? 14 : 16
+            fontSize: isMobile ? 13 : 16
           }}
         >
           ← Back
@@ -190,7 +191,7 @@ export default function OrderPage() {
         <div style={{
           maxWidth: 1400,
           width: '100%',
-          padding: isMobile ? '0 20px' : '0 60px',
+          padding: isMobile ? '0 16px' : '0 60px',
           textAlign: 'center',
           zIndex: 2
         }}>
@@ -201,12 +202,12 @@ export default function OrderPage() {
           >
             <div style={{
               display: 'inline-block',
-              padding: '8px 20px',
+              padding: isMobile ? '6px 14px' : '8px 20px',
               background: 'rgba(212, 178, 106, 0.3)',
               border: '1px solid rgba(212, 178, 106, 0.6)',
               borderRadius: 999,
-              marginBottom: 20,
-              fontSize: 14,
+              marginBottom: isMobile ? 14 : 20,
+              fontSize: isMobile ? 12 : 14,
               fontWeight: 700,
               color: '#f4e5c0',
               textShadow: '0 2px 8px rgba(0,0,0,0.8)'
@@ -215,7 +216,7 @@ export default function OrderPage() {
             </div>
 
             <h1 style={{
-              fontSize: isMobile ? 36 : 72,
+              fontSize: isMobile ? 30 : 72,
               fontWeight: 900,
               marginBottom: 16,
               textShadow: '0 4px 30px rgba(0,0,0,0.9), 0 2px 10px rgba(0,0,0,0.8)',
@@ -228,9 +229,9 @@ export default function OrderPage() {
             <p style={{
               fontSize: isMobile ? 16 : 20,
               color: '#ffffff',
-              marginBottom: 32,
+              marginBottom: isMobile ? 20 : 32,
               maxWidth: 600,
-              margin: '0 auto 32px',
+              margin: isMobile ? '0 auto 20px' : '0 auto 32px',
               textShadow: '0 2px 15px rgba(0,0,0,0.9)',
               fontWeight: 500
             }}>
@@ -239,7 +240,8 @@ export default function OrderPage() {
 
             {/* Quick Stats */}
             <div style={{
-              display: 'flex',
+              display: isMobile ? 'grid' : 'flex',
+              gridTemplateColumns: isMobile ? 'repeat(2, minmax(0, 1fr))' : 'none',
               gap: isMobile ? 16 : 40,
               justifyContent: 'center',
               flexWrap: 'wrap',
@@ -310,7 +312,7 @@ export default function OrderPage() {
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div
+        {!isMobile && <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
           style={{
@@ -323,13 +325,13 @@ export default function OrderPage() {
           }}
         >
           ↓
-        </motion.div>
+        </motion.div>}
       </div>
 
       <div style={{
         maxWidth: 1400,
         margin: '0 auto',
-        padding: isMobile ? '40px 20px 60px' : '60px 60px 80px',
+        padding: isMobile ? '24px 16px 48px' : '60px 60px 80px',
         background: 'var(--bg)'
       }}>
 
@@ -358,7 +360,7 @@ export default function OrderPage() {
                 height={500}
                 style={{
                   width: '100%',
-                  height: isMobile ? 280 : 480,
+                  height: isMobile ? 220 : 480,
                   objectFit: 'cover',
                   display: 'block'
                 }}
@@ -392,8 +394,8 @@ export default function OrderPage() {
                       width={120}
                       height={80}
                       style={{
-                        width: 120,
-                        height: 80,
+                        width: isMobile ? 92 : 120,
+                        height: isMobile ? 64 : 80,
                         objectFit: 'cover',
                         display: 'block',
                         opacity: selectedImage === idx ? 1 : 0.6
@@ -407,7 +409,7 @@ export default function OrderPage() {
             {/* Vehicle Description */}
             <div style={{
               marginTop: 32,
-              padding: 24,
+              padding: isMobile ? 18 : 24,
               background: 'var(--surface)',
               borderRadius: 16,
               border: '1px solid var(--border)',
@@ -422,7 +424,7 @@ export default function OrderPage() {
             {/* Features & Specifications */}
             <div style={{
               marginTop: 24,
-              padding: 24,
+              padding: isMobile ? 18 : 24,
               background: 'var(--surface)',
               borderRadius: 16,
               border: '1px solid var(--border)',
@@ -521,10 +523,10 @@ export default function OrderPage() {
           </div>
 
           {/* Right Column - Booking Form */}
-          <div style={{ position: 'sticky', top: 40, height: 'fit-content' }}>
+          <div style={{ position: isMobile ? 'static' : 'sticky', top: 40, height: 'fit-content' }}>
             <div style={{
               background: 'var(--surface)',
-              padding: 32,
+              padding: isMobile ? 20 : 32,
               borderRadius: 20,
               border: '1px solid var(--border)',
               boxShadow: '0 20px 60px var(--shadow)'
@@ -767,7 +769,7 @@ export default function OrderPage() {
             {/* Rental Terms & Information */}
             <div style={{
               marginTop: 24,
-              padding: 24,
+              padding: isMobile ? 18 : 24,
               background: 'var(--surface)',
               borderRadius: 16,
               border: '1px solid var(--border)'
@@ -795,12 +797,12 @@ export default function OrderPage() {
         </div>
 
         {/* Important Information Section - Full Width Below */}
-        <div style={{ marginTop: 60 }}>
-          <h3 style={{ fontSize: 28, marginBottom: 32, textAlign: 'center' }}>Important Rental Information</h3>
+        <div style={{ marginTop: isMobile ? 40 : 60 }}>
+          <h3 style={{ fontSize: isMobile ? 24 : 28, marginBottom: isMobile ? 24 : 32, textAlign: 'center' }}>Important Rental Information</h3>
 
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 24 }}>
             {/* Chauffeur Service */}
-            <div style={{ padding: 24, background: 'var(--surface)', borderRadius: 16, border: '1px solid var(--border)' }}>
+            <div style={{ padding: isMobile ? 18 : 24, background: 'var(--surface)', borderRadius: 16, border: '1px solid var(--border)' }}>
               <div style={{ fontSize: 32, marginBottom: 12 }}>👨‍✈️</div>
               <h4 style={{ fontSize: 18, marginBottom: 16 }}>Chauffeur-Driven Service</h4>
               <div style={{ display: 'grid', gap: 10, fontSize: 14, color: 'var(--muted)' }}>
@@ -818,7 +820,7 @@ export default function OrderPage() {
             </div>
 
             {/* Allowances */}
-            <div style={{ padding: 24, background: 'rgba(212, 178, 106, 0.08)', borderRadius: 16, border: '1px solid rgba(212, 178, 106, 0.2)' }}>
+            <div style={{ padding: isMobile ? 18 : 24, background: 'rgba(212, 178, 106, 0.08)', borderRadius: 16, border: '1px solid rgba(212, 178, 106, 0.2)' }}>
               <div style={{ fontSize: 32, marginBottom: 12 }}>💵</div>
               <h4 style={{ fontSize: 18, marginBottom: 16 }}>Driver Allowances</h4>
               <div style={{ display: 'grid', gap: 10, fontSize: 14, color: 'var(--muted)' }}>
@@ -838,7 +840,7 @@ export default function OrderPage() {
             </div>
 
             {/* Emergency Protocol */}
-            <div style={{ padding: 24, background: 'rgba(255, 80, 80, 0.08)', borderRadius: 16, border: '1px solid rgba(255, 80, 80, 0.2)' }}>
+            <div style={{ padding: isMobile ? 18 : 24, background: 'rgba(255, 80, 80, 0.08)', borderRadius: 16, border: '1px solid rgba(255, 80, 80, 0.2)' }}>
               <div style={{ fontSize: 32, marginBottom: 12 }}>🚨</div>
               <h4 style={{ fontSize: 18, marginBottom: 16 }}>Emergency Breakdown</h4>
               <div style={{ display: 'grid', gap: 10, fontSize: 14, color: 'var(--muted)' }}>
@@ -862,7 +864,7 @@ export default function OrderPage() {
           {/* Additional Terms */}
           <div style={{
             marginTop: 32,
-            padding: 32,
+            padding: isMobile ? 20 : 32,
             background: 'var(--surface)',
             borderRadius: 20,
             border: '1px solid var(--border)'
