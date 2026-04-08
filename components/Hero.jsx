@@ -10,8 +10,6 @@ const cta = { hidden: { scale: .96, opacity: 0 }, show: { scale: 1, opacity: 1 }
 export default function Hero() {
     const router = useRouter()
     const [isMobile, setIsMobile] = React.useState(typeof window !== 'undefined' && window.innerWidth <= 768)
-    const videoRef = React.useRef(null)
-    const [videoError, setVideoError] = React.useState(false)
 
     // Generate Cloudinary URL for CSS background
     const heroBgUrl = IMAGES.hero.startsWith('http') || IMAGES.hero.startsWith('/')
@@ -30,83 +28,39 @@ export default function Hero() {
         return () => window.removeEventListener('resize', handleResize)
     }, [])
 
-    React.useEffect(() => {
-        if (videoRef.current) {
-            videoRef.current.play().catch(err => {
-                // Ignore AbortError which occurs when the element is removed
-                if (err && err.name === 'AbortError') {
-                    setVideoError(true)
-                    return
-                }
-                // Log other errors for diagnostics
-                // eslint-disable-next-line no-console
-                console.info('Video autoplay failed:', err)
-                setVideoError(true)
-            })
-        }
-    }, [])
-
     return (
         <section style={{
             position: 'relative',
-            minHeight: isMobile ? '70vh' : '85vh',
-            padding: isMobile ? '120px 0 100px' : '160px 0 140px',
+            minHeight: isMobile ? '74vh' : '90vh',
+            padding: isMobile ? '120px 0 96px' : '170px 0 150px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             overflow: 'hidden'
         }}>
-            {/* Video Background or Fallback Image */}
-            {!videoError ? (
-                <motion.video
-                    ref={videoRef}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="auto"
-                    onError={() => setVideoError(true)}
-                    initial={{ scale: 1.06 }}
-                    animate={{ scale: 1.12 }}
-                    transition={{ duration: 20, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
-                    style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        objectPosition: isMobile ? '62% center' : 'center',
-                        filter: 'brightness(0.9) contrast(1.05) saturate(1.1)',
-                        zIndex: 0
-                    }}
-                >
-                    <source src="https://cdn.coverr.co/videos/coverr-luxury-car-driving-through-city-at-night-5273/1080p.mp4" type="video/mp4" />
-                </motion.video>
-            ) : (
-                <motion.div
-                    initial={{ scale: 1.05 }}
-                    animate={{ scale: 1.1 }}
-                    transition={{ duration: 18, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
-                    style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        background: `url(${heroBgUrl})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: isMobile ? '62% center' : 'center',
-                        filter: 'brightness(0.9) contrast(1.05) saturate(1.08)',
-                        zIndex: 0
-                    }}></motion.div>
-            )}
+            {/* Toyota Land Cruiser hero image */}
+            <motion.div
+                initial={{ scale: 1.02 }}
+                animate={{ scale: 1.08 }}
+                transition={{ duration: 20, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
+                style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    background: `url(${heroBgUrl})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: isMobile ? '66% center' : 'center',
+                    filter: 'brightness(0.98) contrast(1.08) saturate(1.08)',
+                    zIndex: 0
+                }}></motion.div>
 
             {/* Dark overlay */}
             <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(115deg, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.8) 48%, rgba(10,10,10,0.9) 100%)',
+                background: 'linear-gradient(110deg, rgba(10,10,10,0.42) 0%, rgba(10,10,10,0.6) 45%, rgba(10,10,10,0.76) 100%)',
                 zIndex: 1
             }}></div>
 
@@ -120,7 +74,7 @@ export default function Hero() {
             <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(to bottom, rgba(10,10,10,0.2) 0%, transparent 20%, rgba(10,10,10,0.9) 100%)',
+                background: 'linear-gradient(to bottom, rgba(10,10,10,0.15) 0%, transparent 26%, rgba(10,10,10,0.82) 100%)',
                 zIndex: 1
             }}></div>
 
@@ -142,11 +96,11 @@ export default function Hero() {
                         margin: '0 auto',
                         padding: isMobile ? '16px 14px' : '28px 28px',
                         borderRadius: isMobile ? 14 : 24,
-                        background: 'rgba(10,10,10,0.4)',
-                        backdropFilter: 'blur(16px)',
-                        WebkitBackdropFilter: 'blur(16px)',
-                        border: '1px solid rgba(255,255,255,0.05)',
-                        boxShadow: '0 30px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1)'
+                        background: 'rgba(10,10,10,0.28)',
+                        backdropFilter: 'blur(12px)',
+                        WebkitBackdropFilter: 'blur(12px)',
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        boxShadow: '0 30px 60px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.12)'
                     }}>
                         <div style={{
                             display: 'inline-flex',
@@ -166,7 +120,7 @@ export default function Hero() {
                             Private Mobility Collection
                         </div>
                         <motion.h1 style={{
-                            fontSize: isMobile ? 32 : 68,
+                            fontSize: isMobile ? 34 : 74,
                             fontWeight: 900,
                             lineHeight: 1.1,
                             marginBottom: isMobile ? 14 : 18,
@@ -201,7 +155,7 @@ export default function Hero() {
                         lineHeight: isMobile ? 1.55 : 1.7
                     }}
                 >
-                    Premium car rental, logistics, travel and tour services across Ghana. Experience comfort and safety with our comprehensively insured fleet and professional defensive drivers.
+                    Featured Toyota Land Cruiser and premium fleet rental, logistics, travel and tour services across Ghana. Experience comfort and safety with comprehensively insured vehicles and professional defensive drivers.
                 </motion.p>
 
                 {/* Feature Stats */}

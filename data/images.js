@@ -1,5 +1,5 @@
 const IMAGES = {
-    hero: '/assets/hero.jpg',
+    hero: 'https://images.unsplash.com/photo-1548450591-cf0ec16fdb3a?auto=format&fit=crop&w=2200&q=80',
     featured1: '/assets/lux.jpg',
     featured2: '/assets/sport.jpg',
     featured3: '/assets/tour.jpg',
