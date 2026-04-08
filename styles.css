@@ -553,6 +553,16 @@ h3 {
   .thumb {
     height: 220px;
   }
+
+  .card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .card-footer > div:last-child {
+    width: 100%;
+  }
 }
 
 @media (min-width: 1024px) {

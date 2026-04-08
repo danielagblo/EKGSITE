@@ -131,7 +131,7 @@ export default function Home() {
       <div style={{ display: 'flex', justifyContent: 'center', padding: '40px 0' }}>
         <TrustBadges />
       </div>
-      <Products limit={3} />
+      <Products />
       <Testimonials testimonials={testimonials} />
       <News newsItems={newsItems} />
     </>

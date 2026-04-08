@@ -8,6 +8,13 @@ export default function ModelDetail() {
   const navigate = (to) => router.push(to)
   const [models, setModels] = React.useState([])
   const [loading, setLoading] = React.useState(true)
+  const [isMobile, setIsMobile] = React.useState(typeof window !== 'undefined' && window.innerWidth <= 768)
+
+  React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   React.useEffect(() => {
     let mounted = true
@@ -21,19 +28,19 @@ export default function ModelDetail() {
     return () => { mounted = false }
   }, [])
 
-  const model = models.find(m => m.id === id)
+  const model = models.find(m => String(m.id) === String(id))
 
   if (loading) return <section style={{ padding: 60 }}>Loading model...</section>
 
   if (!model) return <section style={{ padding: 60 }}>Model not found</section>
 
   return (
-    <section style={{ padding: 60, display: 'grid', gridTemplateColumns: '1fr 420px', gap: 28 }}>
+    <section style={{ padding: isMobile ? 20 : 60, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 420px', gap: isMobile ? 20 : 28 }}>
       <div>
         <h2>{model.name}</h2>
         <p style={{ color: 'var(--muted)' }}>{model.desc}</p>
 
-        <div style={{ display: 'flex', gap: 14, marginTop: 18 }}>
+        <div style={{ display: 'flex', gap: 14, marginTop: 18, flexWrap: 'wrap' }}>
           <div style={{ padding: 12, background: 'rgba(255,255,255,0.02)', borderRadius: 10 }}>
             <div style={{ fontSize: 14, fontWeight: 700 }}>{model.range}{model.rangeUnit && !String(model.range).includes(model.rangeUnit) ? ` ${model.rangeUnit}` : ''}</div>
             <div style={{ color: 'var(--muted)', fontSize: 13 }}>Range</div>
@@ -57,9 +64,9 @@ export default function ModelDetail() {
         </ul>
 
         <h3 style={{ marginTop: 18 }}>Gallery</h3>
-        <div style={{ display: 'flex', gap: 10, marginTop: 10 }}>
+        <div style={{ display: 'flex', gap: 10, marginTop: 10, overflowX: 'auto', paddingBottom: 6 }}>
           {model.gallery.map((g, i) => (
-            <img key={i} src={g} style={{ width: 160, height: 100, objectFit: 'cover', borderRadius: 8 }} alt={`${model.name} ${i}`} />
+            <img key={i} src={g} style={{ width: isMobile ? 120 : 160, height: isMobile ? 80 : 100, objectFit: 'cover', borderRadius: 8, flexShrink: 0 }} alt={`${model.name} ${i}`} />
           ))}
         </div>
       </div>

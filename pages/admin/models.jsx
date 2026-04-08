@@ -56,6 +56,8 @@ export default function AdminModels() {
   const [sortBy, setSortBy] = React.useState('newest')
   const [viewItem, setViewItem] = React.useState(null)
 
+  const sameId = React.useCallback((a, b) => String(a) === String(b), [])
+
   React.useEffect(() => {
     const token = typeof window !== 'undefined' ? localStorage.getItem('admin_token') : null
     if (!token) { router.replace('/admin/login'); return }
@@ -213,7 +215,7 @@ export default function AdminModels() {
       const item = await res.json()
 
       if (editingId) {
-        setItems(s => s.map(i => i.id === editingId ? item : i))
+        setItems(s => s.map(i => sameId(i.id, editingId) ? item : i))
       } else {
         setItems(s => [item, ...s])
       }
@@ -237,8 +239,8 @@ export default function AdminModels() {
         return
       }
       if (!res.ok) throw new Error('Failed to delete')
-      setItems(s => s.filter(i => i.id !== id))
-    } catch (e) { if (mounted) setError(e.message || String(e)) }
+      setItems(s => s.filter(i => !sameId(i.id, id)))
+    } catch (e) { setError(e.message || String(e)) }
   }
 
   const filtered = items.filter(i => {

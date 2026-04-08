@@ -73,7 +73,7 @@ export default function ProductCard({ item }) {
                 {item.price || item.rate} GHS
                 <span style={{ fontSize: 13, fontWeight: 500, opacity: 0.6, marginLeft: 4 }}>/day</span>
               </div>
-              <div style={{ color: 'var(--muted)', fontSize: 13, marginTop: 8, display: 'flex', gap: 16 }}>
+              <div style={{ color: 'var(--muted)', fontSize: 13, marginTop: 8, display: 'flex', flexWrap: 'wrap', columnGap: 16, rowGap: 6 }}>
                 <span>{item.specs?.seats || '-'} Seats</span>
                 <span>{item.specs?.transmission || 'Automatic'}</span>
                 <span>{item.specs?.fuelType || 'Electric'}</span>
@@ -90,7 +90,9 @@ export default function ProductCard({ item }) {
               textTransform: 'uppercase',
               boxShadow: '0 8px 24px rgba(227, 6, 19, 0.4)',
               transition: 'all 0.3s ease',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              flexShrink: 0,
+              textAlign: 'center'
             }}>Book Now</div>
           </div>
         </div>

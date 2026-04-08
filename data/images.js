@@ -1,5 +1,5 @@
 const IMAGES = {
-    hero: '/assets/hero.jpg',
+    hero: 'https://tmna.aemassets.toyota.com/is/image/toyota/toyota/vehicles/2027/landcruiser/galleries/LND_MY25_0002_V001.png?fmt=jpeg&wid=2200',
     featured1: '/assets/lux.jpg',
     featured2: '/assets/sport.jpg',
     featured3: '/assets/tour.jpg',
