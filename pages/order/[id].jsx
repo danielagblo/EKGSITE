@@ -340,15 +340,14 @@ export default function OrderPage() {
           gap: isMobile ? 32 : 40
         }}>
           {/* Left Column - Vehicle Details */}
-          <div>
+          <div style={{ minWidth: 0 }}>
             {/* Main Image */}
             <motion.div
               style={{
                 borderRadius: 20,
                 overflow: 'hidden',
                 marginBottom: 20,
-                boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-                aspectRatio: isMobile ? '16/9' : 'auto'
+                boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
               }}
               whileHover={{ scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 300 }}
@@ -360,7 +359,7 @@ export default function OrderPage() {
                 height={500}
                 style={{
                   width: '100%',
-                  height: isMobile ? '100%' : 480,
+                  height: isMobile ? 320 : 480,
                   objectFit: 'cover',
                   display: 'block'
                 }}
@@ -373,7 +372,8 @@ export default function OrderPage() {
                 display: 'flex',
                 gap: 12,
                 overflowX: 'auto',
-                paddingBottom: 8
+                paddingBottom: 8,
+                WebkitOverflowScrolling: 'touch'
               }}>
                 {allImages.map((img, idx) => (
                   <motion.div
@@ -385,7 +385,8 @@ export default function OrderPage() {
                       borderRadius: 12,
                       overflow: 'hidden',
                       border: selectedImage === idx ? '3px solid var(--accent)' : '3px solid transparent',
-                      transition: 'border 0.2s'
+                      transition: 'border 0.2s',
+                      flexShrink: 0
                     }}
                   >
                     <CldOptimizedImage
